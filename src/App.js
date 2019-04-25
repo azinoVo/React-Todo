@@ -3,13 +3,13 @@ import React from 'react';
 const taskMaster = [
   {
     task:'Initial Task',
-    id: Date.now(),
+    id: 12345,
     completed: false // false is the default
   },
   
   {
     task:'Task II',
-    id:Date.now(),
+    id:123456,
     Completed:false
   }
 ];
@@ -48,9 +48,7 @@ class App extends React.Component {
     });
   };
 
-  addTask = event => {
 
-  }
 
 //Render is similar to the return part of functions - since this is a class we use a method
   render() {
@@ -60,7 +58,7 @@ class App extends React.Component {
         <div className='inputField'></div>
         <form>
           <input type="text"
-            placeholder="Input your Task"
+            placeholder="...Input your Task"
             value={this.state.taskItem.task}
             onChange={this.handleChanges}
             name='task'
