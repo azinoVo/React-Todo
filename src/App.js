@@ -1,25 +1,19 @@
-// - `<App />` will hold all the data needed for this project. 
-// It will also be the container for your Todo Components.
-// - All of your application data will be stored here on `<App />`.
-// - All of your `handler` functions should live here on `<App />`.
-
-// Example
-// class HogwartsStudents extends React.Component {
-//   constructor() {
-//     super();
-//     this.state = {
-//       studentsOnState: students,
-//       student: {
-//         name: '',
-//         identity: '',
-//         img: '',
-//         age: '',
-//         bestFriend: ''
-//       }
-//     };
-//   }
-
 import React from 'react';
+
+const taskMaster = [
+  {
+    task:'Initial Task',
+    id: Date.now(),
+    completed: false // false is the default
+  },
+  
+  {
+    task:'Task II',
+    id:Date.now(),
+    Completed:false
+  }
+];
+
 
 class App extends React.Component {
   // you will need a place to store your state in this component.
@@ -29,36 +23,51 @@ class App extends React.Component {
   constructor(){
     super();
     this.state = {
-      //
+      taskOnState: taskMaster,
+      taskItem: {
+        task:'',
+        id:'',
+        completed:''
+      }
     }
 
   }
 
-  // Example Event Handlers
-  // handleChanges = event => {
-  //   console.log(event.target.name);
-  //   this.setState({
-  //     student: {
-  //       ...this.state.student,
-  //       [event.target.name]: event.target.value
-  //     }
-  //   });
-  // };
+  // Arrow function binds the this and refers to the class App
 
-  // addStudent = event => {
-  //   event.preventDefault();
-  //   this.setState({
-  //     studentsOnState: [...this.state.studentsOnState, this.state.student],
-  //     student: {}
-  //   });
-  // };
+  handleChanges = event => {
+    console.log(event.target.name);
+    this.setState({
+      taskItem: {
+        ...this.state.taskItem,
+        //event.target.name refers to the name on the input button and substitutes for task on 
+        //constructor where initial list is stored; we will be making a new array, not affecting
+        //the original.
+        [event.target.name]:event.target.value
+      }
+    });
+  };
 
+  addTask = event => {
 
+  }
 
+//Render is similar to the return part of functions - since this is a class we use a method
   render() {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
+        <div className='inputField'></div>
+        <form>
+          <input type="text"
+            placeholder="Input your Task"
+            value={this.state.taskItem.task}
+            onChange={this.handleChanges}
+            name='task'
+          />
+          <button onClick={this.handleChanges}>Add Task to List</button>
+          <button onClick={this.clearAll}>Clear All</button>
+        </form>
       </div>
     );
   }
