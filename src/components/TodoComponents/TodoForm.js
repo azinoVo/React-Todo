@@ -6,7 +6,22 @@
 import React from 'react';
 
 //function or class here
+const TodoForm = props => {
+    return(
+        // Add the form below
+        <form onSubmit={props.doSubmit}>
+          <input type="text"
+            placeholder="...Input your Task"
+            name='task'
+            value={props.value}
+            onChange={props.doUpdate}
+          />
+          <button onClick={props.doAddTask}>Add Task to List</button>
+          <button onClick={props.doClearDone}>Clear Completed</button>
+        </form>
+    )
+}
 
 
 
-// export default "";
+export default TodoForm;
