@@ -1,4 +1,5 @@
 import React from 'react';
+import { timingSafeEqual } from 'crypto';
 
 const taskMasterList = [
   {
@@ -24,25 +25,42 @@ class App extends React.Component {
     super();
     this.state = {
       //Items already in list
-      taskMasterList,
+      taskOnState: taskMasterList,
       //New input
-      newTask: ''
+      newTask: {
+        task:'',
+        id:'',
+        Completed:''
+      }
     };
   }
 
+// Arrow function binds the this and refers to the class App
+// When user types something in
+// Regulated Input
 
-  // Arrow function binds the this and refers to the class App
-  // When user types something in
-  onUpdate = event => {
-    console.log(event.target.name);
+  doUpdateInput = event => {
     this.setState({
-        [event.target.name]:event.target.value
+      // newTask: event.target.value
+      newTask: {
+        ...this.state.student,
+        [event.target.name]: event.target.value
+      }
+    });
+  }
+
+  doAddTask = event => {
+    event.preventDefault();
+    this.setState({
+      // Make a new array with the original with new Task
+      taskOnState: [...this.state.taskOnState, this.state.newTask],
+      // Reset input so it doesn't keep track of that one thing forever
+      newTask: {}
     });
   };
 
-  handleSubmit  = event => {
+  doClearDone = event => {
     event.preventDefault();
-
   };
 
 //Render is similar to the return part of functions - since this is a class we use a method
@@ -51,12 +69,25 @@ class App extends React.Component {
 //with the appropriate tasks
   render() {
     return (
-      <div>
+      <div className='container'>
         <h2>Let's Get to Work!</h2>
-        <div className='inputField'></div>
+        <div className="task-list">
+          <h3>{this.state.newTask}</h3>
+        </div>
+        <div>
+        <form onSubmit={this.doAddTask}>
+          <input type="text"
+            value={this.state.newTask}
+            onChange={this.doUpdateInput}
+            placeholder="...Input your Task"
+            name='newTask'
+          />
+          <button>Add Task to List</button>
+        </form>
+        <button onClick={this.doClearDone}>Clear Completed</button>
+        </div>
       </div>
-    );
+    )};
   }
-}
 
 export default App;
